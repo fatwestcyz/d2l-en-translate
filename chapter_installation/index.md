@@ -1,100 +1,61 @@
-# Installation
+# 安装
 :label:`chap_installation`
 
-In order to get up and running,
-we will need an environment for running Python,
-the Jupyter Notebook, the relevant libraries,
-and the code needed to run the book itself.
+为了开始使用，我们需要搭建一个环境，用于运行 Python、Jupyter Notebook、相关*库* （library）以及运行本书本身所需的代码。
 
-## Installing Miniconda
+## 安装 Miniconda
 
-Your simplest option is to install
-[Miniconda](https://conda.io/en/latest/miniconda.html).
-Note that the Python 3.x version is required.
-You can skip the following steps
-if your machine already has conda installed.
+最简单的选择是安装 [Miniconda](https://conda.io/en/latest/miniconda.html)。请注意，我们需要 Python 3.x 版本。 如果你已经在机器上安装了 conda，可以跳过以下步骤。
 
-Visit the Miniconda website and determine
-the appropriate version for your system
-based on your Python 3.x version and machine architecture.
-Suppose that your Python version is 3.9
-(our tested version).
-If you are using macOS,
-you would download the bash script
-whose name contains the strings "MacOSX",
-navigate to the download location,
-and execute the installation as follows
-(taking Intel Macs as an example):
+访问 Miniconda 网站，根据你的 Python 3.x 版本和机器*架构*（architecture）确定适合的版本。 假设你的 Python 版本是 3.9（我们测试所用的版本）。
+
+如果你使用的是 macOS，你需要下载文件名包含字符串 "MacOSX" 的 bash 脚本，导航至下载位置，并按如下方式执行安装（以 Intel Mac 为例）：
 
 ```bash
-# The file name is subject to changes
+# 文件名可能会有所变动
 sh Miniconda3-py39_4.12.0-MacOSX-x86_64.sh -b
 ```
 
 
-A Linux user
-would download the file
-whose name contains the strings "Linux"
-and execute the following at the download location:
+Linux 用户需要下载文件名包含字符串 "Linux" 的文件，并在下载位置执行以下命令：
 
 ```bash
-# The file name is subject to changes
+# 文件名可能会有所变动
 sh Miniconda3-py39_4.12.0-Linux-x86_64.sh -b
 ```
 
 
-A Windows user would download and install Miniconda by following its [online instructions](https://conda.io/en/latest/miniconda.html).
-On Windows, you may search for `cmd` to open the Command Prompt (command-line interpreter) for running commands.
+Windows 用户应按照其 [在线说明](https://conda.io/en/latest/miniconda.html) 下载并安装 Miniconda。在 Windows 上，你可以搜索 `cmd` 来打开命令提示符（命令行解释器）以运行命令。
 
-Next, initialize the shell so we can run `conda` directly.
+接下来，初始化 Shell，以便我们可以直接运行 `conda` 。
 
 ```bash
 ~/miniconda3/bin/conda init
 ```
 
 
-Then close and reopen your current shell.
-You should be able to create
-a new environment as follows:
+然后关闭并重新打开当前的 Shell。 你应该能够通过以下方式创建一个新环境：
 
 ```bash
 conda create --name d2l python=3.9 -y
 ```
 
 
-Now we can activate the `d2l` environment:
+现在我们可以激活 `d2l` 环境：
 
 ```bash
 conda activate d2l
 ```
 
 
-## Installing the Deep Learning Framework and the `d2l` Package
+## 安装深度学习框架和 `d2l` 包
 
-Before installing any deep learning framework,
-please first check whether or not
-you have proper GPUs on your machine
-(the GPUs that power the display
-on a standard laptop are not relevant for our purposes).
-For example,
-if your computer has NVIDIA GPUs and has installed [CUDA](https://developer.nvidia.com/cuda-downloads),
-then you are all set.
-If your machine does not house any GPU,
-there is no need to worry just yet.
-Your CPU provides more than enough horsepower
-to get you through the first few chapters.
-Just remember that you will want to access GPUs
-before running larger models.
+在安装任何深度学习框架之前，请先检查你的机器上是否有合适的 GPU（标准笔记本电脑上用于驱动显示器的 GPU 通常不符合我们的需求）。例如，如果你的计算机拥有 NVIDIA GPU 并且已安装 [CUDA](https://developer.nvidia.com/cuda-downloads)，那就一切准备就绪了。如果你的机器没有配备任何 GPU，也不用担心。 你的 CPU 提供了足够的算力来帮你完成前几章的学习。只要记住，在运行更大规模的模型之前，你将会需要使用 GPU。
 
 
 :begin_tab:`mxnet`
 
-To install a GPU-enabled version of MXNet,
-we need to find out what version of CUDA you have installed.
-You can check this by running `nvcc --version`
-or `cat /usr/local/cuda/version.txt`.
-Assume that you have installed CUDA 11.2,
-then execute the following command:
+要安装支持 GPU 的 MXNet 版本，我们需要知道你安装了哪个版本的 CUDA。 你可以通过运行 `nvcc --version` 或 `cat /usr/local/cuda/version.txt` 来检查。假设你安装的是 CUDA 11.2，那么执行以下命令：
 
 ```bash
 # For macOS and Linux users
@@ -105,14 +66,10 @@ pip install mxnet-cu112==1.9.1 -f https://dist.mxnet.io/python
 ```
 
 
-You may change the last digits according to your CUDA version, e.g., `cu101` for
-CUDA 10.1 and `cu90` for CUDA 9.0.
+你可以根据你的 CUDA 版本更改最后几位数字，例如，CUDA 10.1 对应  `cu101` ，CUDA 9.0 对应 `cu90` 。
 
 
-If your machine has no NVIDIA GPUs
-or CUDA,
-you can install the CPU version
-as follows:
+如果你的机器没有 NVIDIA GPU 或 CUDA，你可以按如下方式安装 CPU 版本：
 
 ```bash
 pip install mxnet==1.9.1
@@ -124,7 +81,7 @@ pip install mxnet==1.9.1
 
 :begin_tab:`pytorch`
 
-You can install PyTorch (the specified versions are tested at the time of writing) with either CPU or GPU support as follows:
+你可以按如下方式安装支持 CPU 或 GPU 的 PyTorch（指定的版本为编写时的测试版本）：
 
 ```bash
 pip install torch==2.0.0 torchvision==0.15.1
@@ -134,7 +91,7 @@ pip install torch==2.0.0 torchvision==0.15.1
 :end_tab:
 
 :begin_tab:`tensorflow`
-You can install TensorFlow with either CPU or GPU support as follows:
+你可以按如下方式安装支持 CPU 或 GPU 的 TensorFlow：
 
 ```bash
 pip install tensorflow==2.12.0 tensorflow-probability==0.20.0
@@ -144,7 +101,7 @@ pip install tensorflow==2.12.0 tensorflow-probability==0.20.0
 :end_tab:
 
 :begin_tab:`jax`
-You can install JAX and Flax with either CPU or GPU support as follows:
+你可以按如下方式安装支持 CPU 或 GPU 的 JAX 和 Flax：
 
 ```bash
 # GPU
@@ -152,10 +109,7 @@ pip install "jax[cuda11_pip]==0.4.13" -f https://storage.googleapis.com/jax-rele
 ```
 
 
-If your machine has no NVIDIA GPUs
-or CUDA,
-you can install the CPU version
-as follows:
+如果你的机器没有 NVIDIA GPU 或 CUDA，你可以按如下方式安装 CPU 版本：
 
 ```bash
 # CPU
@@ -166,26 +120,17 @@ pip install "jax[cpu]==0.4.13" flax==0.7.0
 :end_tab:
 
 
-Our next step is to install
-the `d2l` package that we developed
-in order to encapsulate
-frequently used functions and classes
-found throughout this book:
+我们的下一步是安装我们需要开发的 `d2l` 包，它封装（encapsulate）了本书中经常使用的函数和类：
 
 ```bash
 pip install d2l==1.0.3
 ```
 
+注意：这里的d2l要求numpy版本为1.23.5，可能会与更新版本的 Python 或 PyTorch 等库产生冲突。
 
-## Downloading and Running the Code
+## 下载并运行代码
 
-Next, you will want to download the notebooks
-so that you can run each of the book's code blocks.
-Simply click on the "Notebooks" tab at the top
-of any HTML page on [the D2L.ai website](https://d2l.ai/)
-to download the code and then unzip it.
-Alternatively, you can fetch the notebooks
-from the command line as follows:
+接下来，你需要下载 Notebooks（笔记本），以便运行本书中的每一个代码块。只需点击 [D2L.ai 网站](https://d2l.ai/) 上任何 HTML 页面顶部的 "Notebooks" 标签即可下载代码，然后解压。 或者，你也可以按如下方式从命令行获取 Notebooks：
 
 :begin_tab:`mxnet`
 
@@ -236,40 +181,28 @@ cd jax
 
 :end_tab:
 
-If you do not already have `unzip` installed, first run `sudo apt-get install unzip`.
-Now we can start the Jupyter Notebook server by running:
+如果你还没有安装 `unzip` ，请先运行 `sudo apt-get install unzip` 。现在我们可以通过运行以下命令启动 Jupyter Notebook 服务器：
 
 ```bash
 jupyter notebook
 ```
 
 
-At this point, you can open http://localhost:8888
-(it may have already opened automatically) in your web browser.
-Then we can run the code for each section of the book.
-Whenever you open a new command line window,
-you will need to execute `conda activate d2l`
-to activate the runtime environment
-before running the D2L notebooks,
-or updating your packages
-(either the deep learning framework
-or the `d2l` package).
-To exit the environment,
-run `conda deactivate`.
+此时，你可以在 Web 浏览器中打开 http://localhost:8888（它可能已经自动打开了）。 然后我们就可以运行本书每一节的代码了。 每当你打开一个新的命令行窗口时，在运行 D2L notebooks 或更新你的软件包（无论是深度学习框架还是 `d2l` 包）之前，都需要执行 `conda activate d2l` 来激活运行时环境。 要退出环境，请运行 `conda deactivate`。
 
 
 :begin_tab:`mxnet`
-[Discussions](https://discuss.d2l.ai/t/23)
+[讨论](https://discuss.d2l.ai/t/23)
 :end_tab:
 
 :begin_tab:`pytorch`
-[Discussions](https://discuss.d2l.ai/t/24)
+[讨论](https://discuss.d2l.ai/t/24)
 :end_tab:
 
 :begin_tab:`tensorflow`
-[Discussions](https://discuss.d2l.ai/t/436)
+[讨论](https://discuss.d2l.ai/t/436)
 :end_tab:
 
 :begin_tab:`jax`
-[Discussions](https://discuss.d2l.ai/t/17964)
+[讨论](https://discuss.d2l.ai/t/17964)
 :end_tab:
